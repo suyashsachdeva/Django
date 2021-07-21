@@ -2,6 +2,24 @@
 
 {% block content %}
 <h1>Info</h1>
-{{request.user.is_authenticated}}
-<p>This page is made to show info</p>
+{{request.user}}
+<p>This page is made to show info
+    {{my}}, {{phone}}
+    <ul>
+        {% if request.user != SASAPOOL %}
+            <h1>Welocome Sir</h1>
+        {% elif request.user.is_authenticated == True %}
+            {% for sub in list %}
+            <li>{{forloop.counter}} - {{sub}}</li>
+            {% endfor%}
+        {% else %}
+            <h2>Complete the suthentication process first</h2>
+        {% endif %}
+    </ul>
+    
+</p>
 {% endblock content %}
+<!-- A safe is used to convert the html stored in content to convert into statements
+     A upper is used to convert all the letters into capital case their are a lot of 
+     other feaatures in the documentation make sure you refer to the documentation               
+-->

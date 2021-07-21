@@ -17,10 +17,12 @@ from django.contrib import admin
 from django.urls import path
 
 from mkl.views import home_view, info_view, contact_view
+from fuckoff.views import product_detail_view 
 
 urlpatterns = [
     path('', home_view, name='HOME'),
     path('admin/', admin.site.urls),
     path('contact/',contact_view, name="CONTACT"),
-    path('info/',info_view, name="INFO")
+    path('info/',info_view, name="INFO"),
+    path('product/', product_detail_view)
 ]
