@@ -1,10 +1,39 @@
 #from django.http import HttpResponse as hp
 from django.shortcuts import render
 from .models import fuckoff as fk
-from .formm import ProductForm as pro
+from .formm import ProductForm as pro, RawProform
 
 # Create your views here.
+
+
 def product_create_view(request):
+    myform = RawProform(request.GET)
+    if request.method == "POST":
+        myform = RawProform(request.POST)
+        if myform.is_valid():
+            print(myform.cleaned_data)
+            fk.objects.create(**myform.cleaned_data)
+        else:
+            print(myform.errors)
+    content = {
+        "form": myform
+    }
+    return render(request, "product/product_created.html", content)
+
+
+
+
+# Core HTML
+"""def product_create_view(request):
+    # print(request.GET)
+    # print(request.POST)
+    title = request.POST.get('title')
+    print(title)
+    content = {}
+    return render(request, "product/product_created.html", content)"""
+
+# The easist way possible
+"""def product_create_view(request):
     form = pro(request.POST or None)
     if form.is_valid():
         form.save()
@@ -17,7 +46,7 @@ def product_create_view(request):
     content = {
         'form': form
     }
-    return render(request, "product/product_created.html", content)
+    return render(request, "product/product_create.html", content)"""
 
 
 def product_detail_view(request):
